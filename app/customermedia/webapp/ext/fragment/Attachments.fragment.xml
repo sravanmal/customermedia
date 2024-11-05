@@ -1,0 +1,64 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:macros="sap.fe.macros" xmlns:upload="sap.m.upload">
+	<VBox core:require="{ handler: 'sravan/ust/customermedia/ext/fragment/Attachments'}">
+	<upload:UploadSet
+			id="UploadSet"
+			fileTypes="txt,doc,png"
+			mediaTypes="text/plain,application/msword,image/png"
+			instantUpload="false"
+			uploadEnabled="true"
+			afterItemAdded="handler.onAfterItemAdded"
+			uploadCompleted="handler.onUploadCompleted"	
+			uploadUrl="/odata/v4/customer-master/media"	
+			items="{
+								path: '/media',
+								parameters: {
+									$orderby: 'createdAt desc'
+								},
+								templateShareable: false}"
+			>
+	<upload:toolbar>
+		<OverflowToolbar>
+			<ToolbarSpacer/>
+			<Button
+				id="uploadSelectedButton"
+				text="Upload selected"
+				press="handler.onUploadSelectedButton"/>	
+		</OverflowToolbar>
+	</upload:toolbar>
+
+	<upload:items>
+						<upload:UploadSetItem
+							fileName="{fileName}"
+							mediaType="{MediaType}"
+							url="{url}"
+							enabledEdit="false"
+							visibleEdit="false"
+							openPressed="onOpenPressed"
+						>
+							<upload:attributes>
+								<ObjectAttribute
+									title="Uploaded By"
+									text="{createdBy}"
+									active="false"
+								/>
+								<ObjectAttribute
+									title="Uploaded on"
+									text="{createdAt}"
+									active="false"
+								/>
+								<ObjectAttribute
+									title="File Size"
+									text="{size}"
+									active="false"
+								/>
+							</upload:attributes>
+						</upload:UploadSetItem>
+					</upload:items>
+	
+		
+	</upload:UploadSet>
+	<!-- <Button text="Attachments" press="handler.onPress" />	 -->
+
+	</VBox>
+</core:FragmentDefinition>
+
